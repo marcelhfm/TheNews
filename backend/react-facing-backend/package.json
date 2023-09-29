@@ -1,0 +1,21 @@
+{
+  "name": "react-facing-backend",
+  "module": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "start": "bun ./src/index.ts",
+    "dev": "bun --watch ./src/index.ts"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.14",
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@trpc/client": "^10.38.5",
+    "@trpc/server": "^10.38.5",
+    "cors": "^2.8.5"
+  }
+}
