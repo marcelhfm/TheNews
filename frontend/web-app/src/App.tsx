@@ -12,6 +12,8 @@ export function App() {
   const backendUrl = import.meta.env.VITE_BACKEND_URL as string;
   const kindeClientId = import.meta.env.VITE_KINDE_CLIENT_ID as string;
   const kindeDomain = import.meta.env.VITE_KINDE_DOMAIN as string;
+  const kindeRedirectUri = import.meta.env.VITE_KINDE_REDIRECT_URI as string;
+  const kindeLogoutUri = import.meta.env.VITE_KINDE_LOGOUT_URI as string;
 
   const [queryClient] = useState(() => new QueryClient());
   const [trpcClient] = useState(() =>
@@ -42,8 +44,8 @@ export function App() {
     <KindeProvider
       clientId={kindeClientId}
       domain={kindeDomain}
-      logoutUri={window.location.origin}
-      redirectUri={window.location.origin}
+      logoutUri={kindeLogoutUri}
+      redirectUri={kindeRedirectUri}
       isDangerouslyUseLocalStorage={import.meta.env.DEV}
     >
       <trpc.Provider client={trpcClient} queryClient={queryClient}>
