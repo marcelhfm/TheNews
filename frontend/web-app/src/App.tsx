@@ -3,10 +3,15 @@ import { httpBatchLink } from "@trpc/client";
 import { useState } from "react";
 import { trpc } from "./utils/trpc";
 import { Theme } from "@radix-ui/themes";
-import { IndexPage } from "./pages/IndexPage";
+import { IndexPage } from "./pages/index/IndexPage";
+import { KindeProvider } from "@kinde-oss/kinde-auth-react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ErrorPage from "./pages/error/ErrorPage";
 
 export function App() {
   const backendUrl = import.meta.env.VITE_BACKEND_URL as string;
+  const kindeClientId = import.meta.env.VITE_KINDE_CLIENT_ID as string;
+  const kindeDomain = import.meta.env.VITE_KINDE_DOMAIN as string;
 
   const [queryClient] = useState(() => new QueryClient());
   const [trpcClient] = useState(() =>
@@ -25,13 +30,29 @@ export function App() {
     })
   );
 
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <IndexPage />,
+      errorElement: <ErrorPage />,
+    },
+  ]);
+
   return (
-    <trpc.Provider client={trpcClient} queryClient={queryClient}>
-      <QueryClientProvider client={queryClient}>
-        <Theme>
-          <IndexPage />
-        </Theme>
-      </QueryClientProvider>
-    </trpc.Provider>
+    <KindeProvider
+      clientId={kindeClientId}
+      domain={kindeDomain}
+      logoutUri={window.location.origin}
+      redirectUri={window.location.origin}
+      isDangerouslyUseLocalStorage={import.meta.env.DEV}
+    >
+      <trpc.Provider client={trpcClient} queryClient={queryClient}>
+        <QueryClientProvider client={queryClient}>
+          <Theme>
+            <RouterProvider router={router} />
+          </Theme>
+        </QueryClientProvider>
+      </trpc.Provider>
+    </KindeProvider>
   );
 }
