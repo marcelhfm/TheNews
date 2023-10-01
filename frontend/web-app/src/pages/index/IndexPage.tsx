@@ -4,7 +4,7 @@ import { PageWrapper } from "../../components/PageWrapper";
 import { ArticleCard } from "./components/ArticleCard";
 
 export const IndexPage = () => {
-  const healthQuery = trpc.health.useQuery();
+  const newsQuery = trpc.news.useQuery();
 
   return (
     <PageWrapper>
@@ -14,11 +14,20 @@ export const IndexPage = () => {
           <Heading size="6" style={{ marginBottom: "24px" }}>
             Handpicked For You
           </Heading>
-          <ArticleCard headingText="Test Article">
-            <Text weight="regular" size="3">
-              {healthQuery.data?.server}
-            </Text>
-          </ArticleCard>
+          {newsQuery.data?.map((el) => (
+            <ArticleCard
+              key={el.id}
+              headingText={el.title}
+              detailLink={el.detailsLink}
+              source={el.source}
+            >
+              {el.firstSentence && (
+                <Text weight="regular" size="3">
+                  {el.firstSentence}
+                </Text>
+              )}
+            </ArticleCard>
+          ))}
         </Container>
       </Box>
     </PageWrapper>

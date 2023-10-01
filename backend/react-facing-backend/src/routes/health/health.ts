@@ -4,6 +4,7 @@ export enum HealthStatus {
 }
 
 export const health = async () => {
+  console.log("Retrieving health data...");
   const statuses = {
     server: HealthStatus.healthy,
   };
