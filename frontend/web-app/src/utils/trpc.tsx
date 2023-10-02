@@ -22,8 +22,6 @@ export const TrpcWrapper = ({ children }: ITrpcWrapper) => {
       try {
         const accessToken = await getAccessTokenSilently();
 
-        console.log(accessToken);
-
         setTrpcClient(() =>
           trpc.createClient({
             links: [

@@ -6,7 +6,6 @@ export enum NewsSources {
 }
 
 export const news = async (): Promise<INewsPreview[]> => {
-  console.log("Fetching news...");
   const tagesschau = new Tagesschau();
 
   try {
