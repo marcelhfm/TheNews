@@ -22,8 +22,6 @@ export class Tagesschau {
 
       const body = await response.json();
 
-      console.log(body.news[0]);
-
       const news: INewsPreview[] = body.news.map((el: ITagesschauNewsRes) => {
         return {
           id: el.externalId,
