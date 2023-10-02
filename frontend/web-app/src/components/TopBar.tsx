@@ -3,13 +3,20 @@ import { useNavigate } from "react-router";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import * as Separator from "@radix-ui/react-separator";
 import { useAuth0 } from "@auth0/auth0-react";
+import { LoadingSpinner } from "./LoadingSpinner";
 
 export const TopBar = () => {
-  const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
+  const { loginWithRedirect, logout, isAuthenticated, isLoading } = useAuth0();
   const navigate = useNavigate();
 
   return (
     <nav className="bg-white border-gray-200">
+      {isLoading && (
+        <div className="fixed inset-0 flex items-center justify-center bg-opacity-80 backdrop-blur-md z-50">
+          <LoadingSpinner width="32px" height="32px" />
+        </div>
+      )}
+
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Heading
           onClick={() => {
