@@ -4,16 +4,15 @@ import { useState } from "react";
 import { trpc } from "./utils/trpc";
 import { Theme } from "@radix-ui/themes";
 import { IndexPage } from "./pages/index/IndexPage";
-import { KindeProvider } from "@kinde-oss/kinde-auth-react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./pages/error/ErrorPage";
+import { Auth0Provider } from "@auth0/auth0-react";
 
 export function App() {
   const backendUrl = import.meta.env.VITE_BACKEND_URL as string;
-  const kindeClientId = import.meta.env.VITE_KINDE_CLIENT_ID as string;
-  const kindeDomain = import.meta.env.VITE_KINDE_DOMAIN as string;
-  const kindeRedirectUri = import.meta.env.VITE_KINDE_REDIRECT_URI as string;
-  const kindeLogoutUri = import.meta.env.VITE_KINDE_LOGOUT_URI as string;
+  const authClientId = import.meta.env.VITE_AUTH_CLIENT_ID as string;
+  const authDomain = import.meta.env.VITE_AUTH_DOMAIN as string;
+  const authRedirectUri = import.meta.env.VITE_AUTH_REDIRECT_URI as string;
 
   const [queryClient] = useState(() => new QueryClient());
   const [trpcClient] = useState(() =>
@@ -41,12 +40,12 @@ export function App() {
   ]);
 
   return (
-    <KindeProvider
-      clientId={kindeClientId}
-      domain={kindeDomain}
-      logoutUri={kindeLogoutUri}
-      redirectUri={kindeRedirectUri}
-      isDangerouslyUseLocalStorage={import.meta.env.DEV}
+    <Auth0Provider
+      domain={authDomain}
+      clientId={authClientId}
+      authorizationParams={{
+        redirect_uri: authRedirectUri,
+      }}
     >
       <trpc.Provider client={trpcClient} queryClient={queryClient}>
         <QueryClientProvider client={queryClient}>
@@ -55,6 +54,6 @@ export function App() {
           </Theme>
         </QueryClientProvider>
       </trpc.Provider>
-    </KindeProvider>
+    </Auth0Provider>
   );
 }

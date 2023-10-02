@@ -1,12 +1,12 @@
 import { Button, DropdownMenu, Heading } from "@radix-ui/themes";
 import { useNavigate } from "react-router";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
-import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
 import * as Separator from "@radix-ui/react-separator";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export const TopBar = () => {
+  const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
   const navigate = useNavigate();
-  const { isAuthenticated, login, register, logout } = useKindeAuth();
 
   return (
     <nav className="bg-white border-gray-200">
@@ -35,16 +35,16 @@ export const TopBar = () => {
             </DropdownMenu.Item>
             <DropdownMenu.Separator />
             {isAuthenticated ? (
-              <DropdownMenu.Item onClick={logout as any}>
+              <DropdownMenu.Item onClick={() => logout()}>
                 Log Out
               </DropdownMenu.Item>
             ) : (
               <>
-                <DropdownMenu.Item onClick={login as any}>
+                <DropdownMenu.Item
+                  onClick={() => loginWithRedirect()}
+                  color="blue"
+                >
                   Log In
-                </DropdownMenu.Item>
-                <DropdownMenu.Item onClick={register as any} color="blue">
-                  Create Account
                 </DropdownMenu.Item>
               </>
             )}
@@ -76,7 +76,7 @@ export const TopBar = () => {
                   variant="ghost"
                   size="3"
                   color="gray"
-                  onClick={logout as any}
+                  onClick={() => logout()}
                 >
                   Log Out
                 </Button>
@@ -87,20 +87,10 @@ export const TopBar = () => {
                   <Button
                     variant="ghost"
                     size="3"
-                    color="gray"
-                    onClick={login as any}
+                    color="blue"
+                    onClick={() => loginWithRedirect()}
                   >
                     Log In
-                  </Button>
-                </li>
-                <li>
-                  <Button
-                    variant="ghost"
-                    size="3"
-                    color="blue"
-                    onClick={register as any}
-                  >
-                    Create Account
                   </Button>
                 </li>
               </>
