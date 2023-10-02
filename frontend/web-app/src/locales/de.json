@@ -1,0 +1,16 @@
+{
+  "IndexPage": {
+    "MainHeading": "Deine Nachrichten",
+    "SubHeading": "Für dich händisch ausgewählt",
+    "Unauthenticated": {
+      "Heading": "Ein Ort, für alle deine Nachrichten",
+      "SubHeading": "Erstelle jetzt einen Account",
+      "RegisterButton": "Registrieren"
+    }
+  },
+  "TopBar": {
+    "Home": "Home",
+    "LogOut": "Ausloggen",
+    "LogIn": "Einloggen"
+  }
+}

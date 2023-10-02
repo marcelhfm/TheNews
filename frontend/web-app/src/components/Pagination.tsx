@@ -1,5 +1,3 @@
-import React from "react";
-
 interface IPagination {
   currentPage: number;
   onPageChange: (newPage: number) => void;

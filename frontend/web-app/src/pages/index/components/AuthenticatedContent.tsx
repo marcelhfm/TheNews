@@ -25,26 +25,30 @@ export const AuthenticatedContent = () => {
       {newsQuery.isLoading ? (
         <LoadingSpinner />
       ) : (
-        newsQuery.data?.slice(startIndex, endIndex).map((el) => (
-          <ArticleCard
-            key={el.id}
-            headingText={el.title}
-            detailLink={el.detailsLink}
-            source={el.source}
-          >
-            {el.firstSentence && (
-              <Text weight="regular" size="3">
-                {el.firstSentence}
-              </Text>
-            )}
-          </ArticleCard>
-        ))
+        <>
+          {newsQuery.data?.slice(startIndex, endIndex).map((el) => (
+            <ArticleCard
+              key={el.id}
+              headingText={el.title}
+              detailLink={el.detailsLink}
+              source={el.source}
+            >
+              {el.firstSentence && (
+                <Text weight="regular" size="3">
+                  {el.firstSentence}
+                </Text>
+              )}
+            </ArticleCard>
+          ))}
+          <Pagination
+            currentPage={currentPage}
+            onPageChange={onPageChange}
+            totalPages={
+              Math.ceil(newsQuery.data?.length || 0 / itemsPerPage) || 1
+            }
+          />
+        </>
       )}
-      <Pagination
-        currentPage={currentPage}
-        onPageChange={onPageChange}
-        totalPages={Math.ceil(newsQuery.data?.length || 0 / itemsPerPage) || 1}
-      />
     </>
   );
 };

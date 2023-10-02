@@ -1,0 +1,16 @@
+{
+  "IndexPage": {
+    "MainHeading": "Your News",
+    "SubHeading": "Handpicked For You",
+    "Unauthenticated": {
+      "Heading": "One place for all your favorite news sources",
+      "SubHeading": "Create your account now",
+      "RegisterButton": "Register Now"
+    }
+  },
+  "TopBar": {
+    "Home": "Home",
+    "LogOut": "Log Out",
+    "LogIn": "Log In"
+  }
+}
