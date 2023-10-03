@@ -28,6 +28,7 @@ export const AuthenticatedContent = () => {
         <>
           {newsQuery.data?.slice(startIndex, endIndex).map((el) => (
             <ArticleCard
+              date={el.date}
               key={el.id}
               headingText={el.title}
               detailLink={el.detailsLink}

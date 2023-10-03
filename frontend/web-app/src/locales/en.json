@@ -6,6 +6,9 @@
       "Heading": "One place for all your favorite news sources",
       "SubHeading": "Create your account now",
       "RegisterButton": "Register Now"
+    },
+    "Authenticated": {
+      "MinutesAgo": "XXX minutes ago"
     }
   },
   "TopBar": {

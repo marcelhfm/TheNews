@@ -1,6 +1,7 @@
 import { health } from "./routes/health/health";
 import cors from "cors";
 import { news } from "./routes/news/news";
+import { newsDetail } from "./routes/news/newsDetail";
 import { inferAsyncReturnType, initTRPC } from "@trpc/server";
 import { logRequest } from "./middleware/loggerMiddleware";
 
@@ -33,6 +34,7 @@ const loggedProcedure = publicProcedure.use(loggerMiddleware);
 const appRouter = router({
   health: loggedProcedure.query(async () => await health()),
   news: loggedProcedure.query(async () => await news()),
+  newsDetail: loggedProcedure.query(async () => await newsDetail()),
 });
 
 const app = express();

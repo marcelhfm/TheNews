@@ -6,6 +6,9 @@
       "Heading": "Ein Ort, für alle deine Nachrichten",
       "SubHeading": "Erstelle jetzt einen Account",
       "RegisterButton": "Registrieren"
+    },
+    "Authenticated": {
+      "MinutesAgo": "vor XXX Minuten"
     }
   },
   "TopBar": {
