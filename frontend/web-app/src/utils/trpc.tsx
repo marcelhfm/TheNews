@@ -3,6 +3,7 @@ import type { AppRouter } from "../../../../backend/react-facing-backend/src";
 import { createTRPCReact, httpBatchLink } from "@trpc/react-query";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useAuth0 } from "@auth0/auth0-react";
+import { LoadingSpinner } from "../components/LoadingSpinner";
 
 export const trpc = createTRPCReact<AppRouter>();
 
@@ -15,7 +16,7 @@ export const TrpcWrapper = ({ children }: ITrpcWrapper) => {
   const { user, getAccessTokenSilently, isAuthenticated, isLoading } =
     useAuth0();
   const [queryClient] = useState(() => new QueryClient());
-  const [trpcClient, setTrpcClient] = useState<any>();
+  const [trpcClient, setTrpcClient] = useState<any>(null);
 
   useEffect(() => {
     const getAccessToken = async () => {
@@ -63,7 +64,9 @@ export const TrpcWrapper = ({ children }: ITrpcWrapper) => {
         </trpc.Provider>
       </>
     );
-  } else {
+  } else if (!isAuthenticated) {
     return <>{children}</>;
+  } else {
+    return <LoadingSpinner />;
   }
 };

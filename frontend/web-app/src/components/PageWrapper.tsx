@@ -1,3 +1,4 @@
+import { Box } from "@radix-ui/themes";
 import { TopBar } from "./TopBar";
 
 interface IPageWrapper {
@@ -6,9 +7,9 @@ interface IPageWrapper {
 
 export const PageWrapper = ({ children }: IPageWrapper) => {
   return (
-    <div>
+    <div className="md:ml-72 md:mr-72">
       <TopBar />
-      {children}
+      <Box style={{ padding: "24px" }}>{children}</Box>
     </div>
   );
 };

@@ -4,7 +4,7 @@ import { news } from "./routes/news/news";
 import { newsDetail } from "./routes/news/newsDetail";
 import { inferAsyncReturnType, initTRPC } from "@trpc/server";
 import { logRequest } from "./middleware/loggerMiddleware";
-
+import { z } from "zod";
 import * as trpcExpress from "@trpc/server/adapters/express";
 import express from "express";
 import { auth } from "express-oauth2-jwt-bearer";
@@ -34,7 +34,9 @@ const loggedProcedure = publicProcedure.use(loggerMiddleware);
 const appRouter = router({
   health: loggedProcedure.query(async () => await health()),
   news: loggedProcedure.query(async () => await news()),
-  newsDetail: loggedProcedure.query(async () => await newsDetail()),
+  newsDetail: loggedProcedure
+    .input(z.object({ detailsRequestUrl: z.string() }))
+    .query(async (opts) => await newsDetail(opts)),
 });
 
 const app = express();

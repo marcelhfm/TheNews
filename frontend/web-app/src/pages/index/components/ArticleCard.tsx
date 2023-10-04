@@ -1,11 +1,13 @@
 import { Avatar, Card, Flex, Heading, Separator, Text } from "@radix-ui/themes";
 import { NewsSources } from "../../../../../../backend/react-facing-backend/src/routes/news/news";
-import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { formatDate } from "../../../utils/formatDate";
 
 interface IArticleCard {
   headingText: string;
   children?: React.ReactNode;
-  detailLink: string;
+  detailsRequestUrl?: string;
+  detailsLink?: string;
   source: NewsSources;
   date: string;
 }
@@ -17,50 +19,26 @@ enum SourceLogo {
 export const ArticleCard = ({
   headingText,
   children,
-  detailLink,
+  detailsLink,
+  detailsRequestUrl,
   source,
   date,
 }: IArticleCard) => {
   const sourceLogo = SourceLogo[source];
-  const { t } = useTranslation();
+  const navigate = useNavigate();
 
-  function formatDate(date: Date): string {
-    const minutesText = t("IndexPage.Authenticated.MinutesAgo");
-
-    const now = new Date();
-    const diffInMilliseconds = now.getTime() - date.getTime();
-
-    if (diffInMilliseconds < 60 * 60 * 1000) {
-      // Less than an hour ago
-      const minutesAgo = Math.floor(diffInMilliseconds / (60 * 1000));
-      return minutesText.replace("XXX", minutesAgo.toString());
-    } else if (
-      now.getDate() === date.getDate() &&
-      now.getMonth() === date.getMonth() &&
-      now.getFullYear() === date.getFullYear()
-    ) {
-      // Today
-      const formatter = new Intl.DateTimeFormat("de-DE", {
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-      return formatter.format(date);
-    } else {
-      // Older than today
-      const formatter = new Intl.DateTimeFormat("de-DE", {
-        day: "numeric",
-        month: "short",
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-      return formatter.format(date);
+  const onCardClick = () => {
+    if (!detailsRequestUrl && detailsLink) {
+      window.location.replace(detailsLink);
     }
-  }
+
+    navigate(`/news/${encodeURIComponent(detailsRequestUrl || "")}`);
+  };
 
   return (
     <Card
       style={{ marginBottom: "24px", cursor: "pointer" }}
-      onClick={() => window.location.replace(detailLink)}
+      onClick={() => onCardClick()}
     >
       <Flex align={"center"} justify={"between"}>
         <Heading weight="bold" size="5">
@@ -79,7 +57,6 @@ export const ArticleCard = ({
       <Text size="2" color="gray">
         {formatDate(new Date(date))} | via {source}
       </Text>
-
       {children && <Separator my="3" size="4" />}
       {children}
     </Card>
