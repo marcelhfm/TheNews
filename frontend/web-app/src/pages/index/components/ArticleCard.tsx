@@ -12,7 +12,7 @@ interface IArticleCard {
   date: string;
 }
 
-enum SourceLogo {
+export enum SourceLogo {
   "tagesschau" = "/TagesschauLogo.jpg",
 }
 
@@ -32,7 +32,12 @@ export const ArticleCard = ({
       window.location.replace(detailsLink);
     }
 
-    navigate(`/news/${encodeURIComponent(detailsRequestUrl || "")}`);
+    const dataObject = {
+      detailsRequestUrl,
+      detailsLink,
+    };
+
+    navigate(`/news/${encodeURIComponent(JSON.stringify(dataObject))}`);
   };
 
   return (

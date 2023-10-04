@@ -1,16 +1,34 @@
-import { Box, Container, Em, Flex, Heading, Text } from "@radix-ui/themes";
+import {
+  Avatar,
+  Box,
+  Container,
+  Em,
+  Flex,
+  Heading,
+  Text,
+} from "@radix-ui/themes";
 import { PageWrapper } from "../../components/PageWrapper";
 import { useNavigate, useParams } from "react-router-dom";
 import { trpc } from "../../utils/trpc";
 import { useTranslation } from "react-i18next";
 import { LoadingSpinner } from "../../components/LoadingSpinner";
 import { formatDate } from "../../utils/formatDate";
+import { useMemo } from "react";
+import { SourceLogo } from "../index/components/ArticleCard";
 
 export const NewsDetailsPage = () => {
   const { detailsData } = useParams();
+
+  const dataObject: { detailsRequestUrl: string; detailsLink: string } =
+    useMemo(() => {
+      if (detailsData) {
+        return JSON.parse(detailsData) || {};
+      }
+    }, [detailsData]);
+
   const navigate = useNavigate();
   const newsDetails = trpc.newsDetail.useQuery({
-    detailsRequestUrl: detailsData || "",
+    detailsRequestUrl: dataObject.detailsRequestUrl || "",
   });
   const { t } = useTranslation();
 
@@ -41,21 +59,38 @@ export const NewsDetailsPage = () => {
         {newsDetails.isLoading && <LoadingSpinner />}
         {newsDetails.data && (
           <>
-            <Heading size="8" style={{ marginBottom: "12px" }}>
-              {newsDetails.data.title}
-            </Heading>
+            <Flex align={"center"} justify={"between"}>
+              <Heading size="8" style={{ marginBottom: "12px" }}>
+                {newsDetails.data.title}
+              </Heading>
+            </Flex>
             <Box style={{ marginBottom: "10px" }}>
               <Text size="4" color="gray">
                 {newsDetails.data?.date &&
                   formatDate(new Date(newsDetails.data?.date))}{" "}
-                | via {newsDetails.data?.source}
+                |{" "}
+                <Text
+                  color="blue"
+                  onClick={() => window.open(dataObject.detailsLink)}
+                  style={{ cursor: "pointer" }}
+                >
+                  via {newsDetails.data?.source}
+                </Text>
+                <Avatar
+                  size="1"
+                  fallback="T"
+                  src={SourceLogo[newsDetails.data.source]}
+                  alt="Tagesschau Logo"
+                  style={{ height: "25px", width: "25px", marginLeft: "12px" }}
+                />
               </Text>
             </Box>
             <Container>
-              {newsDetails.data.content.map((el) => {
+              {newsDetails.data.content.map((el, idx) => {
                 if (el.type === "headline" && typeof el.value === "string") {
                   return (
                     <Heading
+                      key={idx}
                       style={{
                         marginBottom: "12px",
                         marginTop: "12px",
@@ -68,7 +103,7 @@ export const NewsDetailsPage = () => {
                 }
                 if (el.type === "text" && typeof el.value === "string") {
                   return (
-                    <Text>
+                    <Text key={idx}>
                       <div
                         style={{ textAlign: "justify", textAlignLast: "left" }}
                       >
@@ -79,7 +114,7 @@ export const NewsDetailsPage = () => {
                 }
                 if (el.type === "quotation" && typeof el.value === "string") {
                   return (
-                    <Text>
+                    <Text key={idx}>
                       <Em>{el.value}</Em>
                     </Text>
                   );

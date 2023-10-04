@@ -79,7 +79,6 @@ export class Tagesschau {
     try {
       const response = await fetch(detailsUrl);
       const body = await response.json();
-      console.log(body.content);
       const content: IContentPart[] = [];
 
       body.content.forEach((el: IContentRes) => {
