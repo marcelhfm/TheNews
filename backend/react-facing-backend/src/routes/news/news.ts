@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import { Tagesschau } from "./tagesschau/tagesschau";
 import { INewsPreview } from "./types";
 
@@ -6,7 +7,7 @@ export enum NewsSources {
 }
 
 export const news = async (): Promise<INewsPreview[]> => {
-  const tagesschau = new Tagesschau();
+  const tagesschau = Tagesschau.getInstance();
 
   try {
     const tagesschauNewsOption = await tagesschau.getLatestNews();
@@ -14,7 +15,6 @@ export const news = async (): Promise<INewsPreview[]> => {
 
     return tagesschauNews;
   } catch (error) {
-    console.log(`An error occurred while fetching news: ${error}`);
-    throw error;
+    throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
   }
 };

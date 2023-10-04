@@ -14,7 +14,7 @@ export const AuthenticatedContent = () => {
   };
 
   // Set the number of items to display per page
-  const itemsPerPage = 10; // Adjust this based on your preference
+  const itemsPerPage = 5; // Adjust this based on your preference
 
   // Calculate the start and end indices for the current page
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -28,14 +28,18 @@ export const AuthenticatedContent = () => {
         <>
           {newsQuery.data?.slice(startIndex, endIndex).map((el) => (
             <ArticleCard
+              date={el.date}
               key={el.id}
               headingText={el.title}
-              detailLink={el.detailsLink}
+              detailsLink={el.detailsLink}
+              detailsRequestUrl={el.detailsRequestUrl}
               source={el.source}
             >
               {el.firstSentence && (
                 <Text weight="regular" size="3">
-                  {el.firstSentence}
+                  <div style={{ textAlign: "justify", textAlignLast: "left" }}>
+                    {el.firstSentence}
+                  </div>
                 </Text>
               )}
             </ArticleCard>

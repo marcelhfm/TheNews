@@ -9,6 +9,7 @@ import { initReactI18next } from "react-i18next";
 import deTranslation from "./locales/de.json";
 import enTranslation from "./locales/en.json";
 import { TrpcWrapper } from "./utils/trpc";
+import { NewsDetailsPage } from "./pages/newsDetails/NewsDetailsPage";
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -35,6 +36,11 @@ export function App() {
     {
       path: "/",
       element: <IndexPage />,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: "/news/:detailsData",
+      element: <NewsDetailsPage />,
       errorElement: <ErrorPage />,
     },
   ]);
