@@ -8,6 +8,10 @@ import { z } from "zod";
 import * as trpcExpress from "@trpc/server/adapters/express";
 import express from "express";
 import { auth } from "express-oauth2-jwt-bearer";
+import { newsSettings } from "./routes/news/newsSettings";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 const createContext = ({
   req,
@@ -37,6 +41,9 @@ const appRouter = router({
   newsDetail: loggedProcedure
     .input(z.object({ detailsRequestUrl: z.string() }))
     .query(async (opts) => await newsDetail(opts)),
+  newsSettings: loggedProcedure
+    .input(z.object({ userId: z.string() }))
+    .query(async (opts) => await newsSettings(opts, prisma)),
 });
 
 const app = express();

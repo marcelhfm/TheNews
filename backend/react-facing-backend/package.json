@@ -10,12 +10,14 @@
     "@types/cors": "^2.8.14",
     "@types/express": "^4.17.18",
     "@types/jsonwebtoken": "^9.0.3",
-    "bun-types": "latest"
+    "bun-types": "latest",
+    "prisma": "^5.4.1"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@prisma/client": "^5.4.1",
     "@trpc/client": "^10.38.5",
     "@trpc/server": "^10.38.5",
     "cors": "^2.8.5",

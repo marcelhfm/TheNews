@@ -4,10 +4,15 @@ import { LoadingSpinner } from "../../../components/LoadingSpinner";
 import { Text } from "@radix-ui/themes";
 import { Pagination } from "../../../components/Pagination";
 import { useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export const AuthenticatedContent = () => {
   const newsQuery = trpc.news.useQuery();
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const { user } = useAuth0();
+  const newsSettingsQuery = trpc.newsSettings.useQuery({
+    userId: user?.sub || "",
+  });
 
   const onPageChange = (newPage: number) => {
     setCurrentPage(newPage);
