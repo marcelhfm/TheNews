@@ -8,13 +8,17 @@
       "RegisterButton": "Register Now"
     },
     "Authenticated": {
-      "MinutesAgo": "XXX minutes ago"
+      "MinutesAgo": "XXX minutes ago",
+      "Error": "An error occurred while fetching news. Please try again."
     }
   },
   "TopBar": {
     "Home": "Home",
     "LogOut": "Log Out",
     "LogIn": "Log In"
+  },
+  "NewsDetailsPage": {
+    "Error": "An error occurred while fetching article. Please try again."
   },
   "Back": "Back"
 }

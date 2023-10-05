@@ -8,13 +8,17 @@
       "RegisterButton": "Registrieren"
     },
     "Authenticated": {
-      "MinutesAgo": "vor XXX Minuten"
+      "MinutesAgo": "vor XXX Minuten",
+      "Error": "Ein Fehler ist aufgetreten. Bitte probiere es erneut."
     }
   },
   "TopBar": {
     "Home": "Home",
     "LogOut": "Ausloggen",
     "LogIn": "Einloggen"
+  },
+  "NewsDetailsPage": {
+    "Error": "Ein Fehler ist aufgetreten. Bitte probiere es erneut."
   },
   "Back": "Zurück"
 }
